@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{ url('/') }}" title="{{ env('APP_NAME', 'DEFAULT') }}">
-                {{ env('APP_NAME', 'DEFAULT') }}
+                <img src="http://dev.magento.io/static/version1534827840/frontend/Sm/market/en_US/images/logo.svg" alt="Laravel China">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="app-navbar-collapse">

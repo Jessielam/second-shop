@@ -10,4 +10,9 @@ class IndexController extends Controller
     {
         return view('index.root');
     }
+
+    public function emailVerifyNotice(Request $request)
+    {
+        return view('index.email_verify_notice');
+    }
 }

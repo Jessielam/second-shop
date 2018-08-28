@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Exceptions\InvalidRequestException;
 use App\Models\User;
 use Cache;
 use Illuminate\Http\Request;
@@ -15,15 +16,15 @@ class EmailVerificationController extends Controller
         $token = $request->input('token');
 
         if (!$email || !$token) {
-            throw new Exception('验证链接不正确');
+            throw new InvalidRequestException('验证链接不正确');
         }
 
         if ($token != Cache::get('email_verification_'.$email)) {
-            throw new Exception('验证链接不正确');
+            throw new InvalidRequestException('验证链接不正确或者已经过期');
         }
 
         if (!$user = User::where('email', $email)->first()) {
-            throw new Exception('非法操作，用户不存在');
+            throw new InvalidRequestException('非法操作，用户不存在');
         }
 
         Cache::forget('email_verification_'.$eamil);
@@ -39,7 +40,7 @@ class EmailVerificationController extends Controller
         $user = $request->user();
         // 先判断用户是否已经激活
         if ($user->email_verified) {
-            throw new Exception('您的邮箱已经激活了');
+            throw new InvalidRequestException('您的邮箱已经激活了');
         }
 
         $user->notify(new EmailVerificationNotification());
